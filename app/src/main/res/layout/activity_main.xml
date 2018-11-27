@@ -67,7 +67,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="-15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:onClick="dropIn"
             android:paddingLeft="12dp"
             android:tag="3" />
@@ -78,7 +78,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="31dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:onClick="dropIn"
             android:paddingLeft="12dp"
             android:tag="4"
@@ -90,7 +90,7 @@
             android:layout_height="100dp"
             android:layout_margin="10dp"
             android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:onClick="dropIn"
             android:paddingLeft="12dp"
             android:tag="5" />
