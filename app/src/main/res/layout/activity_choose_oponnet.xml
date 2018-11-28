@@ -134,32 +134,23 @@
         android:layout_marginStart="163dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="163dp"
-        android:layout_marginBottom="16dp"
         android:text="TextView"
         android:textSize="20sp"
         android:visibility="invisible"
-        app:layout_constraintBottom_toTopOf="@+id/playAgainButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/playAgainButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="51dp"
-        android:layout_marginStart="154dp"
-        android:layout_marginLeft="154dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="153dp"
-        android:layout_marginRight="153dp"
-        android:layout_marginBottom="44dp"
         android:onClick="playAgain"
         android:text="Play Again"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/gridLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/winnerTextView" />
 
     <TextView
         android:id="@+id/turnTextView"
@@ -170,7 +161,7 @@
         android:layout_marginTop="35dp"
         android:layout_marginEnd="120dp"
         android:layout_marginRight="120dp"
-        android:layout_marginBottom="7dp"
+        android:layout_marginBottom="8dp"
         android:text="       goldfish's turn"
         android:textColorLink="@color/colorPrimary"
         android:textSize="24sp"
