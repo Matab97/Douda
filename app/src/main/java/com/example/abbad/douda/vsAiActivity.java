@@ -107,6 +107,7 @@ public class vsAiActivity extends AppCompatActivity {
                     }
                     moveFrom = -1;
                     movePiece = false;
+
                 }
             }
             //Red player have already played 3 times
