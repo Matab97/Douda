@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@drawable/backroundbluealign"
     android:scaleType = "centerCrop"
-    tools:context=".chooseOponnetActivity">
+    tools:context=".vsPlayerActivity">
 
     <GridLayout
         android:id="@+id/gridLayout"

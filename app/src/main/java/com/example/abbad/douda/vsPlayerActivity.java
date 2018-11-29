@@ -4,17 +4,13 @@ package com.example.abbad.douda;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
-import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
-public class chooseOponnetActivity extends AppCompatActivity {
+public class vsPlayerActivity extends AppCompatActivity {
 
     // 0: yellow, 1: red, 2: empty
 
@@ -215,6 +211,6 @@ public class chooseOponnetActivity extends AppCompatActivity {
         @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_choose_oponnet);
+        setContentView(R.layout.activity_vs_player);
     }
 }

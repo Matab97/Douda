@@ -18,7 +18,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".chooseOponnetActivity" />
+        <activity android:name=".vsPlayerActivity" />
         <activity android:name=".vsAiActivity"></activity>
     </application>
 
