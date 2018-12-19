@@ -157,6 +157,7 @@ public class vsAiActivity extends AppCompatActivity {
                         counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
                         counterAiTo.setImageResource(R.drawable.octupus);
                     board.gameActive = !checkWin(board.gameState);
+
                     board.activePlayer= 0;
                     }
                 }else {
