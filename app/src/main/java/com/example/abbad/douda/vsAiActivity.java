@@ -1,224 +1,308 @@
 package com.example.abbad.douda;
 
+import android.nfc.Tag;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 public class vsAiActivity extends AppCompatActivity {
 
+    Board board = new Board();
+    Piece p ;
+    List<Piece> PieceList = new ArrayList<Piece>();
+    Player player = new Player(0);
+    Player robot = new Player(1);
+    int decision;
+    int[] decisionTab;
 
+    int moveFrom=-1;
+    ImageView pastCounter;
+    int ptCounter;
 
-    public class vsPlayerActivity extends AppCompatActivity {
+    public boolean checkWin(int[] game) {
+        boolean g = false;
 
-        // 0: yellow, 1: red, 2: empty
+        for (int[] winningPosition : Board.winningPositions) {
 
-
-        int[] gameState = {2, 2, 2, 2, 2, 2, 2, 2, 2};
-
-        int[][] winningPositions = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {0, 3, 6}, {1, 4, 7}, {2, 5, 8}, {0, 4, 8}, {2, 4, 6}};
-        //possible mouvements from a certain position except position 4
-        int[][] possiblePositions = {{1, 3, 4}, {0, 4, 2}, {1, 4, 5}, {0,4, 6}, {0, 1, 2}, {2, 4, 8}, {3, 4, 7} ,{ 6, 4, 8}, {5, 4, 7} };
-        int activePlayer = 0;
-        //possiblePositions[0]
-        boolean gameActive = true;
-        //boolean gameIsDraw= false;
-        //int roundCounter=0;
-        //*******
-        //star==red shell==yellow
-        //octupus==red goldfish==yellow
-        //*******
-        boolean movePiece = false;
-        int numberOfRedPlayed=0;
-        int numberOfYellowPlayed=0;
-        //might give us an error if the surroundings is already full
-        int moveFrom=-1;
-        ImageView pastCounter;
-
-        //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-
-        public boolean checkWin(int[] game){
-            boolean g=false;
-            for (int[] winningPosition : winningPositions) {
-
-                if (game[winningPosition[0]] == game[winningPosition[1]] && game[winningPosition[1]] == game[winningPosition[2]] && game[winningPosition[0]] != 2) {
-                    // Someone has won!
-                     g = true;
-                }
+            if (game[winningPosition[0]] == game[winningPosition[1]] && game[winningPosition[1]] == game[winningPosition[2]] && game[winningPosition[0]] != 2) {
+                // Someone has won!
+                g = true;
             }
-            return g;
         }
+        return g;
+    }
 
+    public int[] Minimax(int[] game , int numPlayed) {
+          int[] res = {0, 0};
+          Random random = new Random();
+          int cnt=random.nextInt(2);
+          int j =0;
+          for(int i : game){if(i == 1 && j++ == cnt) res[0] =i;}
+          // if that piece can't move
+        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;}
+        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;}
+        cnt=random.nextInt(2);
+        res[1] = Board.possiblePositions[res[0]][cnt];
+        while(game[res[1]]!=2){cnt=random.nextInt(2);res[1] = Board.possiblePositions[res[0]][cnt];}
+        Log.i("value" ,"Minimax: "+ res[0]);
+        //logi(Tag,"Minimax: "+ res[1]);
+        //Log.i(TAG, "Minimax: ");
+        return res;
+    }
+    public int initPlayer(int[] game , int numPlayed) {
+        int res=0 ;
+        Random random = new Random();
+        //while(game[res]!=2)res=random.nextInt(8);
+        Log.i("value" ,"Minimax: "+ res);
+        Toast.makeText(this,"Minimax: "+ res,Toast.LENGTH_LONG);
+        return res;
+    }
 
-        public void dropIn(View view) {
-            ImageView counter = (ImageView) view;
+    public void dropIn(View view) {
+        ImageView counter = (ImageView) view;
 
-            int tappedCounter = Integer.parseInt(counter.getTag().toString());
-            //Toast.makeText(this ,counter.getTag().toString()+" has been touched",Toast.LENGTH_LONG).show();
-            TextView turn = (TextView) findViewById(R.id.turnTextView);
-            if (gameActive && ((activePlayer == 0 && numberOfYellowPlayed < 3) || (activePlayer == 1 && numberOfRedPlayed < 3))) {
-                if (gameState[tappedCounter] == 2) {
-                    gameState[tappedCounter] = activePlayer;
-
+        int tappedCounter = Integer.parseInt(counter.getTag().toString());
+        //Toast.makeText(this ,counter.getTag().toString()+" has been touched",Toast.LENGTH_LONG).show();
+        TextView turn = (TextView) findViewById(R.id.turnTextView);
+        if (board.gameActive && board.numberplayed < 6) {
+            if (board.gameState[tappedCounter] == 2) {
+                board.numberplayed++;
+                // human decision
+                this.board.drop(tappedCounter,this.board.activePlayer);
+                this.p = new Piece(this.board.activePlayer, tappedCounter);
+                this.PieceList.add(this.p);
+                counter.setTranslationY(-1000);
+                counter.setImageResource(R.drawable.goldfish);
+                board.activePlayer =1; // robot play
+                //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
+                counter.animate().translationYBy(1000).setDuration(200);
+                board.gameActive = checkWin(board.gameState);
+                //A.I decision
+                    if(board.gameActive)
+                {
+                    decision = initPlayer( board.gameState  , board.numberplayed);
+                this.board.drop(this.decision,1);
+                this.p = new Piece(this.board.activePlayer, this.decision);
+                this.PieceList.add(this.p);
                     counter.setTranslationY(-1000);
-                    if (activePlayer == 0) {
-
-                        counter.setImageResource(R.drawable.goldfish);
-                        numberOfYellowPlayed++;
-                        activePlayer = 1;
-
-                    } else {
-
-                        counter.setImageResource(R.drawable.octupus);
-                        numberOfRedPlayed++;
-                        activePlayer = 0;
-
-                    }
-
-                    //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
-                    counter.animate().translationYBy(1000).setDuration(300);
-                }
+                counter.setImageResource(R.drawable.octupus);
+                counter.animate().translationYBy(1000).setDuration(200);
+                    board.activePlayer =0;
+                board.gameActive = checkWin(board.gameState);}
             }
-            //Yellow player have already played 3 times
-            //else if(gameActive && gameState[tappedCounter] == 0 && (activePlayer==0 && numberOfYellowPlayed<3))
-            else if (gameActive && activePlayer == 0) {
-                if (!movePiece) {
-                    if (gameState[tappedCounter] == 0) {
-                        pastCounter = counter;
-                        movePiece = true;
-                        gameState[tappedCounter] = 2;//this place become free
-                        counter.setImageDrawable(null);
-                        moveFrom = tappedCounter;
-                    }
-
-                } else {
-                    //see if this move is possible
-                    if (gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == possiblePositions[moveFrom][0] || tappedCounter == possiblePositions[moveFrom][1] || tappedCounter == possiblePositions[moveFrom][2]))) {
-
-                        counter.setImageResource(R.drawable.goldfish);
-                        gameState[tappedCounter] = 0;
-                        activePlayer = 1;
-                    } else {
-                        //move failed return to previous state
-                        gameState[moveFrom] = 0;
-                        pastCounter.setImageResource(R.drawable.goldfish);
-                    }
-                    moveFrom = -1;
-                    movePiece = false;
-
+        }
+        //Yellow player have already played 3 times
+        //else if(gameActive && gameState[tappedCounter] == 0 && (activePlayer==0 && numberOfYellowPlayed<3))
+        else if ((board.gameActive) && (board.activePlayer == 0)) {
+            if (!board.movePiece) {
+                if (this.board.gameState[tappedCounter] == player.playerid) {
+                    for (Piece Element : PieceList) {
+                        if (Element.position == tappedCounter) { Element.selected = true; } }
+                    pastCounter = counter;
+                    ptCounter = tappedCounter;
+                    board.selectpiece(tappedCounter);
+                    counter.setImageDrawable(null);
+                    moveFrom = tappedCounter;
+                    board.movePiece = true;
                 }
-            }
-            //Red player have already played 3 times
-            //else if(gameActive && gameState[tappedCounter] == 1 && (activePlayer==1 && numberOfRedPlayed<3))
-            else if (gameActive && activePlayer == 1) {
-                if (!movePiece) {
-                    if (gameState[tappedCounter] == 1) {
-                        movePiece = true;
-                        pastCounter = counter;
-                        gameState[tappedCounter] = 2;//this place become free
-                        counter.setImageDrawable(null);
-                        moveFrom = tappedCounter;
-                    }
-
-                } else {
-                    //see if this move is possible
-                    if (gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == possiblePositions[moveFrom][0] || tappedCounter == possiblePositions[moveFrom][1] || tappedCounter == possiblePositions[moveFrom][2]))) {
-                        counter.setImageResource(R.drawable.octupus);
-                        gameState[tappedCounter] = 1;
-                        activePlayer = 0;
-                    } else {
-                        //move failed return to previous state
-                        gameState[moveFrom] = 1;
-                        pastCounter.setImageResource(R.drawable.octupus);
-                    }
-                    moveFrom = -1;
-                    movePiece = false;
-                }
-            }
-            if (activePlayer == 0) {
-                //turn.setText("     Yellow's turn");
-                turn.setText("     goldfish's turn");
             } else {
-                //turn.setText("Red's turn");
-                turn.setText("     octupus's turn");
-            }
-            if(checkWin(gameState)){
-                gameActive=false;
-                // Button playAgainButton = (Button) findViewById(R.id.playAgainButton);
+                //see if this move is possible
+                if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
 
-                TextView winnerTextView = (TextView) findViewById(R.id.winnerTextView);
-
-                String winner;
-
-                if (activePlayer == 1) {
-
-                    //winner = "Yellow";
-                    winner = "goldfish";
-
-                } else {
-
-                    // winner = "Red";
-                    winner = "octupus";
-
+                    counter.setImageResource(R.drawable.goldfish);
+                    board.movepiece(tappedCounter, player.playerid, robot.playerid);
+                    for (Piece Element : PieceList) {
+                        if (Element.position == moveFrom) {
+                            Element.position = tappedCounter;
+                        }
+                    }
+                    counter.setImageResource(R.drawable.octupus);
+                    board.gameActive = checkWin(board.gameState);
+                    board.activePlayer =1;
+                    //robot turn
+                    if(board.gameActive)
+                    {this.decisionTab = Minimax(this.board.gameState,this.board.numberplayed);
+                    this.board.gameState[this.decisionTab[0]] = 2;
+                    this.board.gameState[this.decisionTab[1]] = 1;
+                    for (Piece Element : PieceList) {
+                        if (Element.position == this.decisionTab[0]) { Element.position = this.decisionTab[1]; } }
+                    board.gameActive = checkWin(board.gameState);
+                    board.activePlayer= 0;
+                    }
+                }else {
+                    //move failed return to previous state
+                    board.gameState[moveFrom] = 0;
+                    pastCounter.setImageResource(R.drawable.goldfish);
                 }
+                this.moveFrom = -1;
+                this.board.movePiece = false;
+                for (Piece Element : PieceList) {
+                    if (Element.position == tappedCounter) { Element.selected = false; } }
 
-                winnerTextView.setText(winner + " has won!");
-
-                //playAgainButton.setVisibility(View.VISIBLE);
-
-                winnerTextView.setVisibility(View.VISIBLE);
-                turn.setVisibility(view.INVISIBLE);
             }
-            //if(!gameActive)turn.setVisibility(view.INVISIBLE);
-
-
         }
-        public void playAgain(View view) {
+        //Red player have already played 3 times
+        //else if(gameActive && gameState[tappedCounter] == 1 && (activePlayer==1 && numberOfRedPlayed<3))
 
-            //Button playAgainButton = (Button) findViewById(R.id.playAgainButton);
-
-            TextView winnerTextView = (TextView) findViewById(R.id.winnerTextView);
-
-            //playAgainButton.setVisibility(View.INVISIBLE);
-
-            winnerTextView.setVisibility(View.INVISIBLE);
-            TextView turn = (TextView) findViewById(R.id.turnTextView);
-
-            turn.setVisibility(view.VISIBLE);
+        if (board.activePlayer == 0) {
+            //turn.setText("     Yellow's turn");
             turn.setText("     goldfish's turn");
-
-            GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
-
-            for (int i = 0; i < gridLayout.getChildCount(); i++) {
-
-                ImageView counter = (ImageView) gridLayout.getChildAt(i);
-
-                counter.setImageDrawable(null);
-
-            }
-
-            for (int i = 0; i < gameState.length; i++) {
-
-                gameState[i] = 2;
-
-            }
-
-            activePlayer = 0;
-
-            gameActive = true;
-
-            numberOfRedPlayed = 0;
-
-            numberOfYellowPlayed = 0;
-            // roundCounter=0;
-
+        } else {
+            //turn.setText("Red's turn");
+            turn.setText("     octupus's turn");
         }
+        //if(!gameActive)turn.setVisibility(view.INVISIBLE);
+
+
+        if (checkWin(board.gameState)) {
+            board.gameActive = false;
+            // Button playAgainButton = (Button) findViewById(R.id.playAgainButton);
+
+            TextView winnerTextView = findViewById(R.id.winnerTextView);
+
+            String winner;
+
+            if (board.activePlayer == 1) {
+
+                //winner = "Yellow";
+                winner = "goldfish";
+
+            } else {
+
+                // winner = "Red";
+                winner = "octupus";
+
+            }
+
+            winnerTextView.setText(winner + " has won!");
+
+            //playAgainButton.setVisibility(View.VISIBLE);
+
+            winnerTextView.setVisibility(View.VISIBLE);
+            turn.setVisibility(View.INVISIBLE);
+        }
+
+        //if(!gameActive)turn.setVisibility(view.INVISIBLE);
+    }
+/*
+    public int  minimax(int game[] ,boolean player){
+
+        //available spots
+        //var availSpots = à definir selon l'emplacement des pierres;$
+        //player==0(human) player==1(AI)
+        if ((checkWin(game) && !player)  ){
+            return -10;
+        }
+        else if (checkWin(game) && player  ){
+            return 10;
+        }else if(cnt == 6){
+            return 0;
+        }
+    // an array to collect all the objects
+    //List moves = new ArrayList();
+    // loop through available spots
+        int
+  for(int i = 0; i < 9 ; i++) {
+      //create an object for each and store the index of that spot
+      var move = {};
+      move.index = newBoard[availSpots[i], availSpots[i].val]
+
+      // set the empty spot to the current player
+      newBoard[availSpots[i]] = player;
+      newBoard[availSpots[i].val] = empty;
+
+    //collect the score resulted from calling minimax
+      //on the opponent of the current player
+
+      if (player) {
+          int result = minimax(game, false);cnt++;
+          move.score = result;
+      } else {
+          int result = minimax(game, true);cnt++;
+          move.score = result;
+      }
+// reset the spot to empty
+      newBoard[availSpots[i]] = move.index;
+  }
+        // push the object to the array
+// if it is the computer's turn loop over the moves and choose the move with the highest score
+        int bestMove;
+        if(player ){
+            var bestScore = -10000;
+            for(var i = 0; i < moves.length; i++){
+                if(moves[i].score > bestScore){
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }else{
+
+// else loop over the moves and choose the move with the lowest score
+            var bestScore = 10000;
+            for(var i = 0; i < moves.length; i++){
+                if(moves[i].score < bestScore){
+                    bestScore = moves[i].score;
+                    bestMove = i;
+                }
+            }
+        }
+
+// return the chosen move (object) from the moves array
+        return moves[bestMove];
+    }
+    */
+public void playAgain(View view) {
+
+    //Button playAgainButton = (Button) findViewById(R.id.playAgainButton);
+
+    TextView winnerTextView = (TextView) findViewById(R.id.winnerTextView);
+
+    //playAgainButton.setVisibility(View.INVISIBLE);
+
+    winnerTextView.setVisibility(View.INVISIBLE);
+    TextView turn = (TextView) findViewById(R.id.turnTextView);
+
+    turn.setVisibility(view.VISIBLE);
+    turn.setText("     goldfish's turn");
+
+    GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
+
+    for (int i = 0; i < gridLayout.getChildCount(); i++) {
+
+        ImageView counter = (ImageView) gridLayout.getChildAt(i);
+
+        counter.setImageDrawable(null);
+
+    }
+
+    for (int i = 0; i < board.gameState.length; i++) {
+
+        board.gameState[i] = 2;
+
+    }
+
+    board.activePlayer = 0;
+
+    board.gameActive = true;
+
+    board.numberplayed=0;
+    // roundCounter=0;
+
+}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vs_ai);
     }
+
 }

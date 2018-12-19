@@ -8,7 +8,9 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
+
 boolean vsplayer;
+
 public void clickVsPAi(View view){
         Intent intent =new Intent(getApplicationContext(),vsAiActivity.class);
         startActivity(intent);
