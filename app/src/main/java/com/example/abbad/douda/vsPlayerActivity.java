@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,12 +41,12 @@ public class vsPlayerActivity extends AppCompatActivity {
 
     public void dropIn(View view) {
         ImageView counter = (ImageView) view;
-
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
         //Toast.makeText(this ,counter.getTag().toString()+" has been touched",Toast.LENGTH_LONG).show();
         TextView turn = (TextView) findViewById(R.id.turnTextView);
         if (board.gameActive && board.numberplayed < 6) {
             if (board.gameState[tappedCounter] == 2) {
+                //Toast.makeText(getBaseContext(),"Minimax: "+ tappedCounter,Toast.LENGTH_LONG).show();
                 board.numberplayed++;
                 counter.setTranslationY(-1000);
                 if (board.activePlayer == 0) {
@@ -80,7 +81,6 @@ public class vsPlayerActivity extends AppCompatActivity {
                     moveFrom = tappedCounter;
                     board.movePiece = true;
                 }
-
             } else {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {

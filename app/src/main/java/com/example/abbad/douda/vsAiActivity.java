@@ -23,7 +23,6 @@ public class vsAiActivity extends AppCompatActivity {
     Player robot = new Player(1);
     int decision;
     int[] decisionTab;
-
     int moveFrom=-1;
     ImageView pastCounter;
     int ptCounter;
@@ -44,12 +43,14 @@ public class vsAiActivity extends AppCompatActivity {
     public int[] Minimax(int[] game , int numPlayed) {
           int[] res = {0, 0};
           Random random = new Random();
-          int cnt=random.nextInt(2);
+          int cnt=random.nextInt(3);
           int j =0;
-          for(int i : game){if(i == 1 && j++ == cnt) res[0] =i;}
+          for(int i=0;i<9;i++){if(game[i] == 1 && j++ == cnt) res[0] =i;}
           // if that piece can't move
-        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;}
-        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;}
+        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;
+            j=0;for(int i=0;i<9;i++){if(game[i] == 1 && j++ == cnt) res[0] =i;}}
+        if(game[Board.possiblePositions[res[0]][0]]!=2 && game[Board.possiblePositions[res[0]][1]]!=2 && game[Board.possiblePositions[res[0]][2]]!=2){cnt++;cnt%=3;
+            j=0;for(int i=0;i<9;i++){if(game[i] == 1 && j++ == cnt) res[0] =i;}}
         cnt=random.nextInt(2);
         res[1] = Board.possiblePositions[res[0]][cnt];
         while(game[res[1]]!=2){cnt=random.nextInt(2);res[1] = Board.possiblePositions[res[0]][cnt];}
@@ -61,7 +62,7 @@ public class vsAiActivity extends AppCompatActivity {
     public int initPlayer(int[] game , int numPlayed) {
         int res=0 ;
         Random random = new Random();
-        //while(game[res]!=2)res=random.nextInt(8);
+        while(game[res]!=2)res=random.nextInt(9);
         Log.i("value" ,"Minimax: "+ res);
         Toast.makeText(this,"Minimax: "+ res,Toast.LENGTH_LONG);
         return res;
@@ -69,13 +70,14 @@ public class vsAiActivity extends AppCompatActivity {
 
     public void dropIn(View view) {
         ImageView counter = (ImageView) view;
-
+        ImageView counterAi;
+        ImageView counterAiTo;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
         //Toast.makeText(this ,counter.getTag().toString()+" has been touched",Toast.LENGTH_LONG).show();
         TextView turn = (TextView) findViewById(R.id.turnTextView);
         if (board.gameActive && board.numberplayed < 6) {
             if (board.gameState[tappedCounter] == 2) {
-                board.numberplayed++;
+                board.numberplayed+=2;//both players will play
                 // human decision
                 this.board.drop(tappedCounter,this.board.activePlayer);
                 this.p = new Piece(this.board.activePlayer, tappedCounter);
@@ -85,19 +87,23 @@ public class vsAiActivity extends AppCompatActivity {
                 board.activePlayer =1; // robot play
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
                 counter.animate().translationYBy(1000).setDuration(200);
-                board.gameActive = checkWin(board.gameState);
+                board.gameActive = !checkWin(board.gameState);
                 //A.I decision
-                    if(board.gameActive)
-                {
-                    decision = initPlayer( board.gameState  , board.numberplayed);
-                this.board.drop(this.decision,1);
+                if(board.gameActive) {
+                        decision = initPlayer( board.gameState  , board.numberplayed);
+                    //for(int i=0;i<9;i++ ) {if (board.gameState[i] == 2) decision = i; }
+                    Toast.makeText(this,"DECISION: "+ decision,Toast.LENGTH_LONG).show();
+                    board.drop(decision,1);
                 this.p = new Piece(this.board.activePlayer, this.decision);
                 this.PieceList.add(this.p);
-                    counter.setTranslationY(-1000);
-                counter.setImageResource(R.drawable.octupus);
-                counter.animate().translationYBy(1000).setDuration(200);
+                //0x7f070049 IS THE ID OF IMAGEVIEW1
+                counterAi = (ImageView)findViewById(0x7f070049+decision);
+                    counterAi.setTranslationY(-1000);
+                counterAi.setImageResource(R.drawable.octupus);
+                counterAi.animate().translationYBy(1000).setDuration(200);
                     board.activePlayer =0;
-                board.gameActive = checkWin(board.gameState);}
+                board.gameActive = !checkWin(board.gameState);
+                }
             }
         }
         //Yellow player have already played 3 times
@@ -108,7 +114,7 @@ public class vsAiActivity extends AppCompatActivity {
                     for (Piece Element : PieceList) {
                         if (Element.position == tappedCounter) { Element.selected = true; } }
                     pastCounter = counter;
-                    ptCounter = tappedCounter;
+                    //ptCounter = tappedCounter;
                     board.selectpiece(tappedCounter);
                     counter.setImageDrawable(null);
                     moveFrom = tappedCounter;
@@ -118,30 +124,47 @@ public class vsAiActivity extends AppCompatActivity {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
 
-                    counter.setImageResource(R.drawable.goldfish);
+                    //counter.setImageResource(R.drawable.goldfish);
                     board.movepiece(tappedCounter, player.playerid, robot.playerid);
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) {
                             Element.position = tappedCounter;
                         }
                     }
-                    counter.setImageResource(R.drawable.octupus);
-                    board.gameActive = checkWin(board.gameState);
+                    counter.setImageResource(R.drawable.goldfish);
+                    board.gameActive = !checkWin(board.gameState);
                     board.activePlayer =1;
                     //robot turn
                     if(board.gameActive)
-                    {this.decisionTab = Minimax(this.board.gameState,this.board.numberplayed);
-                    this.board.gameState[this.decisionTab[0]] = 2;
-                    this.board.gameState[this.decisionTab[1]] = 1;
+                    {
+                        this.decisionTab = Minimax(this.board.gameState,this.board.numberplayed);
+                        Toast.makeText(this,"DECISION0: "+ decisionTab[0]+" DECISION1: "+ decisionTab[1],Toast.LENGTH_LONG).show();
+
+                        for (Piece Element : PieceList) {
+                            if (Element.position == decisionTab[0]) { Element.selected = true; } }
                     for (Piece Element : PieceList) {
                         if (Element.position == this.decisionTab[0]) { Element.position = this.decisionTab[1]; } }
-                    board.gameActive = checkWin(board.gameState);
+                        board.movePiece=true;
+                        counterAi = (ImageView)findViewById(0x7f070049+decisionTab[0]);
+                        counterAi.setImageDrawable(null);
+                        board.selectpiece(decisionTab[0]);
+                        board.movepiece(decisionTab[1], robot.playerid, player.playerid);
+                        for (Piece Element : PieceList) {
+                            if (Element.position == decisionTab[0]) {
+                                Element.position = decisionTab[1];
+                            }
+                        }
+                        counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
+                        counterAiTo.setImageResource(R.drawable.octupus);
+                    board.gameActive = !checkWin(board.gameState);
                     board.activePlayer= 0;
                     }
                 }else {
                     //move failed return to previous state
+
                     board.gameState[moveFrom] = 0;
                     pastCounter.setImageResource(R.drawable.goldfish);
+
                 }
                 this.moveFrom = -1;
                 this.board.movePiece = false;
