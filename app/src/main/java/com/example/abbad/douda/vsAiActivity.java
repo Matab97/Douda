@@ -108,7 +108,7 @@ public class vsAiActivity extends AppCompatActivity {
         }
         //Yellow player have already played 3 times
         //else if(gameActive && gameState[tappedCounter] == 0 && (activePlayer==0 && numberOfYellowPlayed<3))
-        else if ((board.gameActive) && (board.activePlayer == 0)) {
+        else if ((board.gameActive) ) {
             if (!board.movePiece) {
                 if (this.board.gameState[tappedCounter] == player.playerid) {
                     for (Piece Element : PieceList) {
@@ -125,7 +125,7 @@ public class vsAiActivity extends AppCompatActivity {
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
 
                     //counter.setImageResource(R.drawable.goldfish);
-                    board.movepiece(tappedCounter, player.playerid, robot.playerid);
+                   board.gameState[tappedCounter]=0;
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) {
                             Element.position = tappedCounter;
@@ -141,23 +141,16 @@ public class vsAiActivity extends AppCompatActivity {
                         Toast.makeText(this,"DECISION0: "+ decisionTab[0]+" DECISION1: "+ decisionTab[1],Toast.LENGTH_LONG).show();
 
                         for (Piece Element : PieceList) {
-                            if (Element.position == decisionTab[0]) { Element.selected = true; } }
-                    for (Piece Element : PieceList) {
-                        if (Element.position == this.decisionTab[0]) { Element.position = this.decisionTab[1]; } }
+                            if (Element.position == decisionTab[0]) { Element.selected = true;Element.position = this.decisionTab[1]; } }
                         board.movePiece=true;
                         counterAi = (ImageView)findViewById(0x7f070049+decisionTab[0]);
                         counterAi.setImageDrawable(null);
-                        board.selectpiece(decisionTab[0]);
-                        board.movepiece(decisionTab[1], robot.playerid, player.playerid);
-                        for (Piece Element : PieceList) {
-                            if (Element.position == decisionTab[0]) {
-                                Element.position = decisionTab[1];
-                            }
-                        }
+                        board.gameState[decisionTab[0]]=2;
+                        board.gameState[decisionTab[1]]=1;
+
                         counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
                         counterAiTo.setImageResource(R.drawable.octupus);
                     board.gameActive = !checkWin(board.gameState);
-
                     board.activePlayer= 0;
                     }
                 }else {
@@ -167,11 +160,10 @@ public class vsAiActivity extends AppCompatActivity {
                     pastCounter.setImageResource(R.drawable.goldfish);
 
                 }
-                this.moveFrom = -1;
                 this.board.movePiece = false;
                 for (Piece Element : PieceList) {
-                    if (Element.position == tappedCounter) { Element.selected = false; } }
-
+                    if (Element.position == tappedCounter ||Element.position == moveFrom ) { Element.selected = false; } }
+                this.moveFrom = -1;
             }
         }
         //Red player have already played 3 times
