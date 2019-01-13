@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 public class BoardShopActivity extends AppCompatActivity {
 
-
     //il faut verifier que le joueur est connecté pour prendre son score
     int score=10000;
     int boardPrice[] = {0,1000,1200,1200,1500,1500,1500};
@@ -17,7 +16,8 @@ public class BoardShopActivity extends AppCompatActivity {
         ImageView counter = (ImageView) view;
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
         if(boardObtenue[tappedCounter]) Toast.makeText(this,"board already purchased",Toast.LENGTH_LONG).show();
-        else if(boardPrice[tappedCounter]<=score){score-=boardPrice[tappedCounter];boardObtenue[tappedCounter]=true;}
+        else if(boardPrice[tappedCounter]<=score){score-=boardPrice[tappedCounter];boardObtenue[tappedCounter]=true;
+        Toast.makeText(this,"CONGRATSSSSSSSSSSS!!!!!",Toast.LENGTH_LONG).show();}
         else Toast.makeText(this,"score not enough",Toast.LENGTH_LONG).show();
     }
 

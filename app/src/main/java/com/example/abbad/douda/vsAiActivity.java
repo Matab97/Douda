@@ -83,7 +83,7 @@ public class vsAiActivity extends AppCompatActivity {
                 this.p = new Piece(this.board.activePlayer, tappedCounter);
                 this.PieceList.add(this.p);
                 counter.setTranslationY(-1000);
-                counter.setImageResource(R.drawable.goldfish);
+                counter.setImageResource(p.pieceImage);
                 board.activePlayer =1; // robot play
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
                 counter.animate().translationYBy(1000).setDuration(200);
@@ -99,7 +99,7 @@ public class vsAiActivity extends AppCompatActivity {
                 //0x7f070049 IS THE ID OF IMAGEVIEW1
                 counterAi = (ImageView)findViewById(0x7f070049+decision);
                     counterAi.setTranslationY(-1000);
-                counterAi.setImageResource(R.drawable.octupus);
+                    counter.setImageResource(p.pieceImage);
                 counterAi.animate().translationYBy(1000).setDuration(200);
                     board.activePlayer =0;
                 board.gameActive = !checkWin(board.gameState);
@@ -131,7 +131,7 @@ public class vsAiActivity extends AppCompatActivity {
                             Element.position = tappedCounter;
                         }
                     }
-                    counter.setImageResource(R.drawable.goldfish);
+                    counter.setImageResource(p.pieceImage);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer =1;
                     //robot turn
@@ -149,7 +149,7 @@ public class vsAiActivity extends AppCompatActivity {
                         board.gameState[decisionTab[1]]=1;
 
                         counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
-                        counterAiTo.setImageResource(R.drawable.octupus);
+                        counterAiTo.setImageResource(p.pieceImage);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer= 0;
                     }
@@ -157,7 +157,7 @@ public class vsAiActivity extends AppCompatActivity {
                     //move failed return to previous state
 
                     board.gameState[moveFrom] = 0;
-                    pastCounter.setImageResource(R.drawable.goldfish);
+                    pastCounter.setImageResource(p.pieceImage);
 
                 }
                 this.board.movePiece = false;
@@ -171,10 +171,10 @@ public class vsAiActivity extends AppCompatActivity {
 
         if (board.activePlayer == 0) {
             //turn.setText("     Yellow's turn");
-            turn.setText("     goldfish's turn");
+            turn.setText("     P1 turn");
         } else {
             //turn.setText("Red's turn");
-            turn.setText("     octupus's turn");
+            turn.setText("     P2 turn");
         }
         //if(!gameActive)turn.setVisibility(view.INVISIBLE);
 

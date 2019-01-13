@@ -53,13 +53,13 @@ public class vsPlayerActivity extends AppCompatActivity {
                     board.drop(tappedCounter,board.activePlayer);
                     p = new Piece(board.activePlayer, tappedCounter);
                     PieceList.add(p);
-                    counter.setImageResource(R.drawable.goldfish);
+                    counter.setImageResource(p.pieceImage);
                     board.activePlayer = 1;
 
                 } else {
-                    board.drop(tappedCounter,board.activePlayer);
-                    counter.setImageResource(R.drawable.octupus);
                     p = new Piece(board.activePlayer, tappedCounter);
+                    board.drop(tappedCounter,board.activePlayer);
+                    counter.setImageResource(p.pieceImage);
                     PieceList.add(p);
                     board.activePlayer = 0;
                 }
@@ -85,14 +85,14 @@ public class vsPlayerActivity extends AppCompatActivity {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
 
-                    counter.setImageResource(R.drawable.goldfish);
+                    counter.setImageResource(p.pieceImage);
                     board.movepiece(tappedCounter,player1.playerid,player2.playerid);
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) { Element.position = tappedCounter; } }
                 } else {
                     //move failed return to previous state
                     board.gameState[moveFrom] = board.activePlayer;
-                    pastCounter.setImageResource(R.drawable.goldfish);
+                    pastCounter.setImageResource(p.pieceImage);
                 }
                 this.moveFrom = -1;
                 this.board.movePiece = false;
@@ -116,7 +116,7 @@ public class vsPlayerActivity extends AppCompatActivity {
             } else {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
-                    counter.setImageResource(R.drawable.octupus);
+                    counter.setImageResource(p.pieceImage);
                     board.movepiece(tappedCounter,player2.playerid,player1.playerid);
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) { Element.position = tappedCounter; } }
@@ -124,7 +124,7 @@ public class vsPlayerActivity extends AppCompatActivity {
                 } else {
                     //move failed return to previous state
                     board.gameState[moveFrom] = player2.playerid;
-                    pastCounter.setImageResource(R.drawable.octupus);
+                    pastCounter.setImageResource(p.pieceImage);
                 }
                 moveFrom = -1;
                 board.movePiece = false;
@@ -132,10 +132,10 @@ public class vsPlayerActivity extends AppCompatActivity {
         }
         if (board.activePlayer == 0) {
             //turn.setText("     Yellow's turn");
-            turn.setText("     goldfish's turn");
+            turn.setText("     P1 turn");
         } else {
             //turn.setText("Red's turn");
-            turn.setText("     octupus's turn");
+            turn.setText("     P2 turn");
         }
         //if(!gameActive)turn.setVisibility(view.INVISIBLE);
 

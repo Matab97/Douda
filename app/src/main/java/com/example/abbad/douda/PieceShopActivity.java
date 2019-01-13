@@ -17,7 +17,8 @@ public class PieceShopActivity extends AppCompatActivity {
         int tappedCounter = Integer.parseInt(counter.getTag().toString());
 
             if(pieceObtenue[tappedCounter]) Toast.makeText(this,"board already purchased",Toast.LENGTH_LONG).show();
-            else if(piecePrice[tappedCounter]<=score){score-=piecePrice[tappedCounter];pieceObtenue[tappedCounter]=true;}
+            else if(piecePrice[tappedCounter]<=score){score-=piecePrice[tappedCounter];pieceObtenue[tappedCounter]=true;
+                Toast.makeText(this,"CONGRATSSSSSSSSSSS!!!!!",Toast.LENGTH_LONG).show();}
             else Toast.makeText(this,"score not enough",Toast.LENGTH_LONG).show();
 
     }
