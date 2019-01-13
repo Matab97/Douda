@@ -83,7 +83,7 @@ public class vsAiActivity extends AppCompatActivity {
                 this.p = new Piece(this.board.activePlayer, tappedCounter);
                 this.PieceList.add(this.p);
                 counter.setTranslationY(-1000);
-                counter.setImageResource(p.pieceImage);
+                counter.setImageResource(R.drawable.piece1+board.activePlayer);
                 board.activePlayer =1; // robot play
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
                 counter.animate().translationYBy(1000).setDuration(200);
@@ -99,8 +99,8 @@ public class vsAiActivity extends AppCompatActivity {
                 //0x7f070049 IS THE ID OF IMAGEVIEW1
                 counterAi = (ImageView)findViewById(0x7f070049+decision);
                     counterAi.setTranslationY(-1000);
-                    counter.setImageResource(p.pieceImage);
-                counterAi.animate().translationYBy(1000).setDuration(200);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
+                counterAi.animate().translationYBy(1000).setDuration(100);
                     board.activePlayer =0;
                 board.gameActive = !checkWin(board.gameState);
                 }
@@ -131,7 +131,7 @@ public class vsAiActivity extends AppCompatActivity {
                             Element.position = tappedCounter;
                         }
                     }
-                    counter.setImageResource(p.pieceImage);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer =1;
                     //robot turn
@@ -157,7 +157,7 @@ public class vsAiActivity extends AppCompatActivity {
                     //move failed return to previous state
 
                     board.gameState[moveFrom] = 0;
-                    pastCounter.setImageResource(p.pieceImage);
+                    pastCounter.setImageResource(R.drawable.piece1+board.activePlayer);
 
                 }
                 this.board.movePiece = false;

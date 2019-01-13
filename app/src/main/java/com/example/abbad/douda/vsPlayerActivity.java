@@ -53,18 +53,18 @@ public class vsPlayerActivity extends AppCompatActivity {
                     board.drop(tappedCounter,board.activePlayer);
                     p = new Piece(board.activePlayer, tappedCounter);
                     PieceList.add(p);
-                    counter.setImageResource(p.pieceImage);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.activePlayer = 1;
 
                 } else {
                     p = new Piece(board.activePlayer, tappedCounter);
                     board.drop(tappedCounter,board.activePlayer);
-                    counter.setImageResource(p.pieceImage);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     PieceList.add(p);
                     board.activePlayer = 0;
                 }
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
-                counter.animate().translationYBy(1000).setDuration(200);
+                counter.animate().translationYBy(1000).setDuration(100);
             }
         }
         //Yellow player have already played 3 times
@@ -85,14 +85,14 @@ public class vsPlayerActivity extends AppCompatActivity {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
 
-                    counter.setImageResource(p.pieceImage);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.movepiece(tappedCounter,player1.playerid,player2.playerid);
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) { Element.position = tappedCounter; } }
                 } else {
                     //move failed return to previous state
                     board.gameState[moveFrom] = board.activePlayer;
-                    pastCounter.setImageResource(p.pieceImage);
+                    pastCounter.setImageResource(R.drawable.piece1+board.activePlayer);
                 }
                 this.moveFrom = -1;
                 this.board.movePiece = false;
@@ -116,7 +116,7 @@ public class vsPlayerActivity extends AppCompatActivity {
             } else {
                 //see if this move is possible
                 if (board.gameState[tappedCounter] == 2 && ((moveFrom == 4 && tappedCounter != 4) || (tappedCounter == board.possiblePositions[moveFrom][0] || tappedCounter == board.possiblePositions[moveFrom][1] || tappedCounter == board.possiblePositions[moveFrom][2]))) {
-                    counter.setImageResource(p.pieceImage);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.movepiece(tappedCounter,player2.playerid,player1.playerid);
                     for (Piece Element : PieceList) {
                         if (Element.position == moveFrom) { Element.position = tappedCounter; } }
@@ -124,7 +124,7 @@ public class vsPlayerActivity extends AppCompatActivity {
                 } else {
                     //move failed return to previous state
                     board.gameState[moveFrom] = player2.playerid;
-                    pastCounter.setImageResource(p.pieceImage);
+                    pastCounter.setImageResource(R.drawable.piece1+board.activePlayer);
                 }
                 moveFrom = -1;
                 board.movePiece = false;
@@ -151,12 +151,12 @@ public class vsPlayerActivity extends AppCompatActivity {
             if (board.activePlayer == 1) {
 
                 //winner = "Yellow";
-                winner = "goldfish";
+                winner = "P1";
 
             } else {
 
                 // winner = "Red";
-                winner = "octupus";
+                winner = "P2";
 
             }
 
@@ -183,7 +183,7 @@ public class vsPlayerActivity extends AppCompatActivity {
         TextView turn = (TextView) findViewById(R.id.turnTextView);
 
         turn.setVisibility(view.VISIBLE);
-        turn.setText("     goldfish's turn");
+        turn.setText("     P1 turn");
 
         GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 

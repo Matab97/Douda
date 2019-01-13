@@ -11,6 +11,6 @@ public class Piece {
         this.owner = owner;
         this.position = position;
         this.id= owner +1;
-        pieceImage = R.drawable.piece1 + owner;
+       // pieceImage = R.drawable.piece1 + owner;
     }
 }
