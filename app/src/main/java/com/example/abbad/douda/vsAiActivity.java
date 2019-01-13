@@ -83,7 +83,7 @@ public class vsAiActivity extends AppCompatActivity {
                 this.p = new Piece(this.board.activePlayer, tappedCounter);
                 this.PieceList.add(this.p);
                 counter.setTranslationY(-1000);
-                counter.setImageResource(R.drawable.piece1+board.activePlayer);
+                counter.setImageResource(R.drawable.piece1);
                 board.activePlayer =1; // robot play
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
                 counter.animate().translationYBy(1000).setDuration(200);
@@ -131,7 +131,7 @@ public class vsAiActivity extends AppCompatActivity {
                             Element.position = tappedCounter;
                         }
                     }
-                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
+                    counter.setImageResource(R.drawable.piece1);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer =1;
                     //robot turn
@@ -149,7 +149,7 @@ public class vsAiActivity extends AppCompatActivity {
                         board.gameState[decisionTab[1]]=1;
 
                         counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
-                        counterAiTo.setImageResource(p.pieceImage);
+                        counterAiTo.setImageResource((R.drawable.piece1+1);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer= 0;
                     }
@@ -157,7 +157,7 @@ public class vsAiActivity extends AppCompatActivity {
                     //move failed return to previous state
 
                     board.gameState[moveFrom] = 0;
-                    pastCounter.setImageResource(R.drawable.piece1+board.activePlayer);
+                    pastCounter.setImageResource(R.drawable.piece1+1);
 
                 }
                 this.board.movePiece = false;
