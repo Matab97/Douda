@@ -99,7 +99,7 @@ public class vsAiActivity extends AppCompatActivity {
                 //0x7f070049 IS THE ID OF IMAGEVIEW1
                 counterAi = (ImageView)findViewById(0x7f070049+decision);
                     counterAi.setTranslationY(-1000);
-                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
+                    counterAi.setImageResource(R.drawable.piece1+board.activePlayer);
                 counterAi.animate().translationYBy(1000).setDuration(100);
                     board.activePlayer =0;
                 board.gameActive = !checkWin(board.gameState);
@@ -119,6 +119,7 @@ public class vsAiActivity extends AppCompatActivity {
                     counter.setImageDrawable(null);
                     moveFrom = tappedCounter;
                     board.movePiece = true;
+
                 }
             } else {
                 //see if this move is possible
