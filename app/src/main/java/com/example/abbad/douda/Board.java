@@ -6,6 +6,16 @@ public class Board {
     //possible mouvements from a certain position except position 4
     static int[][] possiblePositions = {{1, 3, 4}, {0, 4, 2}, {1, 4, 5}, {0,4, 6}, {0, 1, 2}, {2, 4, 8}, {3, 4, 7} ,{ 6, 4, 8}, {5, 4, 7} };
     int activePlayer = 0;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    int id;
     boolean gameActive;
     boolean movePiece ;
     int numberplayed ;
@@ -15,6 +25,7 @@ public class Board {
         this.gameActive = true ;
         this.movePiece = false;
         this.numberplayed = 0;
+        id=1;
     }
     void selectpiece(int c) {
         this.movePiece = true;

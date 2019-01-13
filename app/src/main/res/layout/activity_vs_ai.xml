@@ -26,7 +26,7 @@
         app:layout_constraintTop_toBottomOf="@+id/playAgainButton">
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/imageView37"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -37,7 +37,7 @@
             android:tag="0" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageView12"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -48,7 +48,7 @@
             android:tag="1" />
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/imageView13"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -59,7 +59,7 @@
             android:tag="2" />
 
         <ImageView
-            android:id="@+id/imageView4"
+            android:id="@+id/imageView31"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -70,7 +70,7 @@
             android:tag="3" />
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/imageView15"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"
@@ -81,7 +81,7 @@
             android:tag="4" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imageView16"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_margin="10dp"

@@ -8,7 +8,6 @@ import android.view.View;
 
 public class MainActivity extends AppCompatActivity {
 
-
 boolean vsplayer;
 
 public void clickVsPAi(View view){
@@ -21,11 +20,15 @@ public void clickVsPAi(View view){
         Intent intent =new Intent(getApplicationContext(),vsPlayerActivity.class);
         startActivity(intent);
     }
+    public void market(View view)
+    {
+        Intent intent =new Intent(getApplicationContext(),MarketActivity.class);
+        startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
        // getSupportActionBar().hide();
         setContentView(R.layout.activity_main);
-
     }
 }

@@ -19,7 +19,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".vsPlayerActivity" />
-        <activity android:name=".vsAiActivity"></activity>
+        <activity android:name=".vsAiActivity" />
+        <activity android:name=".MarketActivity" />
+        <activity android:name=".BoardShopActivity" />
+        <activity android:name=".PieceShopActivity"></activity>
     </application>
 
 </manifest>
