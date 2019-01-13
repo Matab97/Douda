@@ -116,7 +116,6 @@ public class vsAiActivity extends AppCompatActivity {
                     pastCounter = counter;
                     //ptCounter = tappedCounter;
                     board.selectpiece(tappedCounter);
-                    counter.setImageDrawable(null);
                     moveFrom = tappedCounter;
                     board.movePiece = true;
 
