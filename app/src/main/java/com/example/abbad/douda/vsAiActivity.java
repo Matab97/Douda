@@ -83,7 +83,7 @@ public class vsAiActivity extends AppCompatActivity {
                 this.p = new Piece(this.board.activePlayer, tappedCounter);
                 this.PieceList.add(this.p);
                 counter.setTranslationY(-1000);
-                counter.setImageResource(R.drawable.piece1);
+                counter.setImageResource(R.drawable.piece1+board.activePlayer);
                 board.activePlayer =1; // robot play
                 //counter.animate().translationYBy(1500).rotation(3600).setDuration(300);
                 counter.animate().translationYBy(1000).setDuration(200);
@@ -131,10 +131,11 @@ public class vsAiActivity extends AppCompatActivity {
                             Element.position = tappedCounter;
                         }
                     }
-                    counter.setImageResource(R.drawable.piece1);
+                    counter.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer =1;
                     //robot turn
+
                     if(board.gameActive)
                     {
                         this.decisionTab = Minimax(this.board.gameState,this.board.numberplayed);
@@ -149,7 +150,7 @@ public class vsAiActivity extends AppCompatActivity {
                         board.gameState[decisionTab[1]]=1;
 
                         counterAiTo = (ImageView)findViewById(0x7f070049+decisionTab[1]);
-                        counterAiTo.setImageResource((R.drawable.piece1+1);
+                        counterAiTo.setImageResource(R.drawable.piece1+board.activePlayer);
                     board.gameActive = !checkWin(board.gameState);
                     board.activePlayer= 0;
                     }
@@ -157,7 +158,7 @@ public class vsAiActivity extends AppCompatActivity {
                     //move failed return to previous state
 
                     board.gameState[moveFrom] = 0;
-                    pastCounter.setImageResource(R.drawable.piece1+1);
+                    pastCounter.setImageResource(R.drawable.piece1+board.activePlayer);
 
                 }
                 this.board.movePiece = false;
@@ -190,12 +191,12 @@ public class vsAiActivity extends AppCompatActivity {
             if (board.activePlayer == 1) {
 
                 //winner = "Yellow";
-                winner = "goldfish";
+                winner = "P1";
 
             } else {
 
                 // winner = "Red";
-                winner = "octupus";
+                winner = "P2";
 
             }
 
@@ -288,7 +289,7 @@ public void playAgain(View view) {
     TextView turn = (TextView) findViewById(R.id.turnTextView);
 
     turn.setVisibility(view.VISIBLE);
-    turn.setText("     goldfish's turn");
+    turn.setText("     P1 turn");
 
     GridLayout gridLayout = (GridLayout) findViewById(R.id.gridLayout);
 
