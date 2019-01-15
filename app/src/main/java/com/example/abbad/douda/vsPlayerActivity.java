@@ -25,7 +25,6 @@ public class vsPlayerActivity extends AppCompatActivity {
     int moveFrom=-1;
     ImageView pastCounter;
     int ptCounter;
-
     public boolean checkWin(int[] game) {
         boolean g = false;
 
@@ -73,7 +72,10 @@ public class vsPlayerActivity extends AppCompatActivity {
             if (!board.movePiece) {
                 if (this.board.gameState[tappedCounter] == player1.playerid) {
                     for (Piece Element : PieceList) {
-                        if (Element.position == tappedCounter) { Element.selected = true; } }
+                        if (Element.position == tappedCounter) {
+                            Element.selected = true;
+                        }
+                    }
                     pastCounter = counter;
                     ptCounter = tappedCounter;
                     board.selectpiece(tappedCounter);
